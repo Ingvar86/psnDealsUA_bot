@@ -1,7 +1,7 @@
 const request = require('request');
 
 const filterDeals = (deals) => {
-  let array = deals.included.filter(deal => deal.type === 'game');
+  let array = deals.included.filter(deal => deal.type === 'game' && deal.attributes.skus.find(x => x.prices['non-plus-user']['strikethrough-price']));
   array = array.map((deal) => {
     const { prices } = deal.attributes.skus.find(x => x.prices['non-plus-user']['strikethrough-price']);
     return { _id: deal.id, name: deal.attributes.name.replace(/[™®]/g, ''), prices };
