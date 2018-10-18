@@ -19,7 +19,7 @@ const _getDeals = (start, size) => {
           json = JSON.parse(body);          
         }
         catch (error) {
-          console.(body);
+          console.log(body);
           reject(error);
         }
         resolve(filterDeals(json));
