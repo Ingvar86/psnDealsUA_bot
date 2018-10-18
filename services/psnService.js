@@ -14,7 +14,15 @@ const _getDeals = (start, size) => {
   return new Promise((resolve, reject) => {
     request.get(apiUrl, (error, response, body) => {
       if (!error) {
-        resolve(filterDeals(JSON.parse(body)));
+        let json;
+        try {
+          json = JSON.parse(body);          
+        }
+        catch (error) {
+          console.(body);
+          reject(error);
+        }
+        resolve(filterDeals(json));
       } else {
         reject(error);
       }
