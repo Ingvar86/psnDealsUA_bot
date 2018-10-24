@@ -1,5 +1,5 @@
 const TelegramBot = require('node-telegram-bot-api');
-const chatSetvice = require('../services/chatService');
+const chatService = require('../services/chatService');
 
 // replace the value below with the Telegram token you receive from @BotFather
 const token = process.env.BOT_TOKEN;
@@ -20,7 +20,7 @@ bot.onText(/\/start/, (msg) => {
   // of the message
 
   const chatId = msg.chat.id;
-  chatSetvice.saveChat(chatId);
+  chatService.saveChat(chatId);
   // send back the matched "whatever" to the chat
   bot.sendMessage(chatId, 'notification on');
 });
@@ -32,7 +32,7 @@ bot.onText(/\/stop/, (msg) => {
   // of the message
 
   const chatId = msg.chat.id;
-  chatSetvice.deleteChat(chatId);
+  chatService.deleteChat(chatId);
   // send back the matched "whatever" to the chat
   bot.sendMessage(chatId, 'notification off');
 });
@@ -46,16 +46,12 @@ bot.onText(/\/stop/, (msg) => {
 //   // bot.sendMessage(chatId, "Received your message");
 // });
 
-bot.notifyAll = (messages, options) => chatSetvice.getChats().then((chats) => {
-  console.log(JSON.stringify(chats));
-  console.log(messages.count);
-  let promises = [];
+bot.notifyAll = (messages, options) => chatService.getChats().then((chats) => {
   chats.forEach((chat) => {
-    messages.forEach(m => {
-      promises.push(bot.sendMessage(chat.chatId, m, options));
+    messages.forEach(async (m) => {
+      await bot.sendMessage(chat.chatId, m, options);
     });
   });
-  return Promise.all(promises);
 });
 
 module.exports = bot;

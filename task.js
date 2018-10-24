@@ -1,4 +1,3 @@
-const winston = require('winston');
 const psnService = require('./services/psnService');
 const dealService = require('./services/dealService');
 const bot = require('./telegram/bot');
@@ -31,7 +30,7 @@ const getMessages = (deals) => {
         message += `-${plusDiscount}% ${price.display} -> ${actualPlusPrice.display} (PS+)\n`;
       }
     } catch (err) {
-      winston.error('Parse error: ', JSON.stringify(deal));
+      console.error(`Parse error: ${JSON.stringify(deal)}`);
     }
   });
   messages.push(message)
@@ -53,5 +52,5 @@ psnService.getDeals().then(deals => dealService.getDeals().then((oldDeals) => {
   .then(() => connectionService.closeConnection())
   .catch((error) => {
     connectionService.closeConnection();
-    winston.error(error);
+    console.error(`Error: ${error}`);
   });
