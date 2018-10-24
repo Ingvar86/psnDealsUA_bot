@@ -17,12 +17,12 @@ const _getDeals = (start, size) => {
         let json;
         try {
           json = JSON.parse(body);          
+          resolve(filterDeals(json));
         }
         catch (error) {
           console.log(body);
           reject(error);
         }
-        resolve(filterDeals(json));
       } else {
         reject(error);
       }
@@ -30,13 +30,18 @@ const _getDeals = (start, size) => {
   });
 };
 
+const sleep = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 exports.getDeals = async () => {
   let deals = [];
   let i = 0;
-  const size = 30;
+  const size = 100;
   let array = [];
   do {
     array = await _getDeals(i, size);
+    await sleep(3000);
     deals = deals.concat(array);
     i += size;
   }
