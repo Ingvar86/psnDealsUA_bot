@@ -47,8 +47,10 @@ bot.onText(/\/stop/, (msg) => {
 // });
 
 bot.notifyAll = (messages, options) => chatSetvice.getChats().then((chats) => {
+  console.log(JSON.stringify(chats));
   chats.forEach((chat) => {
     messages.forEach(async (m) => {
+      console.log('chatId: ' + chat.chatId);
       await bot.sendMessage(chat.chatId, m, options);
     });
   });
