@@ -34,7 +34,8 @@ const getMessages = (deals) => {
       winston.error('Parse error: ', JSON.stringify(deal));
     }
   });
-  return messages.push(message);
+  messages.push(message)
+  return messages;
 };
 
 const sendDeals = (deals) => {
