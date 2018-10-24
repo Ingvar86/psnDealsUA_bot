@@ -3,8 +3,6 @@ const dealService = require('./services/dealService');
 const bot = require('./telegram/bot');
 const connectionService = require('./services/connectionService');
 
-winston.level = process.env.DEBUG_LEVEL || 'info';
-
 const getMessages = (deals) => {
   const storeUrl = 'https://store.playstation.com/ru-ua/product';
   const messages = [];
